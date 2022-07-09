@@ -4,11 +4,15 @@ import MaxHeap from './heapClass';
 
 function App() {
   const [startArray, setStartArray] = useState();
-  const [shouldUpdate, setShouldUpdate] = useState(false);
+  const [activeSort, setActiveSort] = useState();
+  const [replay, setReplay] = useState(false);
   let animationArray = [];
   let mergeSortArray = startArray;
   let tempElement;
   let eligibilityArray = [];
+  // const clearAnimation = ()=> {
+  //   animationArray = [];
+  // }
   const concatElements = (left, pivet, right)=>{
     const result = left.concat(pivet).concat(right);
     let array = localStorage.getItem('array').split(',');
@@ -119,7 +123,7 @@ function App() {
               }
           }
       }
-      mergeSortArray.splice(0, 0 , result);
+      mergeSortArray.splice(arrayIndex, 0 , result);
       // mergeSortArray = mergeSortArray.flat();
       animationArray.push(mergeSortArray.flat())
       // console.log(mergeSortArray, 'array');
@@ -163,13 +167,21 @@ function App() {
     return array
   }
   const sort = (e)=> {
-    updateArray();
-    // setShouldUpdate(true)
+    // const replay = document.getElementsByClassName('play')[0]
+    // replay.style.visibility = 'visible';
     localStorage.setItem('array', mergeSortArray);
     const arrayBars = document.getElementsByClassName('par');
     let sortType;
     sortType = e.target.getAttribute('data-id')
+    // if((e.target === replay) && activeSort){
+    //   updateArray();
+    //   clearAnimation();
+    //   sortType = activeSort;
+    // } else {
+    //   sortType = e.target.getAttribute('data-id')
+    // }
     let speed;
+    // setActiveSort(sortType);
     if(sortType === 'merge'){
      mergeSort(startArray);
      speed = 200
@@ -195,12 +207,13 @@ function App() {
   return (
     <div className="App">
       <nav>
-        <h1 onClick={sort} data-id="bubble">BUBBLE SORT</h1>
+        <h1 onClick={sort} data-id="merge">MERGE SORT</h1>
         <h1 onClick={sort} data-id="heap">HEAP SORT</h1>
         <h1 onClick={sort} data-id="quick">QUICK SORT</h1>
-        <h1 onClick={sort} data-id="merge">MERGE SORT</h1>
+        <h1 onClick={sort} data-id="bubble">BUBBLE SORT</h1>
       </nav>
       <div>
+        <button style={{visibility: 'hidden'}} className='play' onClick={sort}>Play Again</button>
         <div className='container'>
           {startArray && startArray.map((item, index)=>{
             return <div style={{height: `${item}vh`}} className="par" key={index}></div>
@@ -214,4 +227,3 @@ function App() {
 }
 
 export default App;
-
