@@ -1,6 +1,6 @@
 html {
   font-size: 16px;
-  font-family: 'Sacramento', cursive;
+  /* font-family: 'Sacramento', cursive; */
 }
 
 * {
@@ -54,4 +54,16 @@ button {
 
 nav h1, button {
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 9px;
+  }
 }
